@@ -34,13 +34,18 @@
 
 
     // Testimonials carousel
-    $(".testimonial-carousel").owlCarousel({
-        autoplay: true,
-        smartSpeed: 1500,
-        dots: true,
-        loop: true,
-        items: 1
+    $(document).ready(function(){
+        $(".testimonial-carousel").owlCarousel({
+            items: 1, // Change this to the number of items you want to display
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            nav: true,
+            dots: true
+        });
     });
+    
+ 
     
 })(jQuery);
 

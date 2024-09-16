@@ -1,0 +1,221 @@
+{% extends 'course/index.html' %}
+{% load static %}
+{% block title %} Course_Detail {% endblock %}
+{% block detail %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title> ECOURSES - Online Courses HTML Template </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'course_details/img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/{% static 'course_details/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'course_details/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'course_details/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <!-- <div class="container-fluid bg-dark">
+        <div class="row py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center text-white">
+                    <small><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</small>
+                    <small class="px-3">|</small>
+                    <small><i class="fa fa-envelope mr-2"></i>info@example.com</small>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-white pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <!-- Navbar End -->
+
+
+    <!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
+        <div class="container text-center py-5">
+            <h1 class="text-white display-1">Course Detail</h1>
+            <div class="d-inline-flex text-white mb-5">
+                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Course Detail</p>
+            </div>
+            <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-light bg-white text-body px-4 dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Courses</button>
+                        <div class="dropdown-menu">
+                            {% for course in courses %}
+                                <a class="dropdown-item" href="{% url 'detail' course.id %}">{{ course.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <input type="text" class="form-control border-light" style="padding: 30px 25px;" placeholder="Keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary px-4 px-lg-5">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="mb-5">
+                        <div class="section-title position-relative mb-5">
+                            <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Course Detail</h6>
+                            <h1 class="display-4">{{course.name}}</h1>
+                        </div>
+                        {% for video in course.videos.all %}
+                            <div class="video-container">
+                                <video width="320" height="240" controls>
+                                    <source src="{{ video.file.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p>{{ video.name }} </p> <!-- Assuming each video has a title -->
+                            </div>
+                        {% endfor %}
+
+                        <p> {{course.description }} </p>
+                    </div>
+
+                    <h2 class="mb-3">Related Courses</h2>
+                    <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
+                        {% for coursel in courses %}
+                            <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="{% url 'detail' course.id %}">
+                                {% if coursel.image %}
+                                    <img class="img-fluid" src="{{ coursel.image.url }}"  alt="">
+                                {% else %}
+                                    <img class="img-fluid" src="courses/default_course.jpg" alt="Default Image">
+                                {% endif %}
+                                <div class="courses-text">
+                                    <h4 class="text-center text-white px-3">{{ coursel.name }}</h4>
+                                    <div class="border-top w-100 mt-3">
+                                        <div class="d-flex justify-content-between p-4">
+                                            <span class="text-white"><i class="fa fa-user mr-2"></i>{{ coursel.teacher.full_name }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-5 mt-lg-0">
+                    <div class="bg-primary mb-5 py-3">
+                        <h3 class="text-white py-3 px-4 m-0">Course Features</h3>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Instructor</h6>
+                            <h6 class="text-white my-3">{{course.teacher.full_name }}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Rating</h6>
+                            <h6 class="text-white my-3"> {{average_course_rating }} <small> ({{avg_course_student}}) </small></h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Lectures</h6>
+                            <h6 class="text-white my-3">{{video_quantity}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Duration</h6>
+                            <h6 class="text-white my-3"> {{avg_course_hour}} hour {{avg_course_minute}} minutes </h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Skill level</h6>
+                            <h6 class="text-white my-3">All Level</h6>
+                        </div>
+                        <div class="d-flex justify-content-between px-4">
+                            <h6 class="text-white my-3">Language</h6>
+                            <h6 class="text-white my-3">English</h6>
+                        </div>
+                        <h5 class="text-white py-3 px-4 m-0">Course Price: ${{course.price}}</h5>
+                        <div class="py-3 px-4">
+                            <a class="btn btn-block btn-secondary py-3 px-5" href="">Enroll Now</a>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="mb-3">Categories</h2>
+                        <ul class="list-group list-group-flush">
+                            {% for category in categories %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <a href="{% url 'course_view' category.id %}" class="text-decoration-none h6 m-0">{{ category.title }}</a>
+                                    <span class="badge badge-primary badge-pill">{{ category.courses.count }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Detail End -->
+
+
+    <!-- Footer Start -->
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary rounded-0 btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'course_details/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'course_details/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'course_details/lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'course_details/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'course_details/js/main.js' %}"></script>
+</body>
+
+</html>
+{% endblock %}
