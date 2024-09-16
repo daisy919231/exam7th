@@ -10,5 +10,7 @@ urlpatterns=[
     path('about/', views.AboutPage.as_view(), name='about'),
     path('teachers/', views.Teachers.as_view(), name='teachers'),
     path('blogs/', views.Blogs.as_view(), name='blogs'),
+    path('blog_detail/<int:blog_id>/', views.BlogDetail.as_view(), name='blog_detail'),
+
     
 ]

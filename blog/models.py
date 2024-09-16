@@ -18,6 +18,12 @@ class Blog(BaseModel):
     category=models.ForeignKey(Category, on_delete=models.CASCADE,related_name='blogs')
     image=models.ImageField(upload_to='blogs/', default='default_blog.png')
 
+    @property
+    def written_at(self):
+        if self.created_at is not None:
+            joined=self.created_at.strftime('%Y-%m-%d')
+            return joined
+
 class Comment(BaseModel):
     class RatingChoices(models.IntegerChoices):
         zero=0
